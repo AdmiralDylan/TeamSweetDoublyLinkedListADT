@@ -3,10 +3,22 @@ package adts;
 import java.util.Iterator;
 
 import interfaces.ListInterface;
+import nodes.DLLNode;
 
-public class DLLList implements ListInterface<E>, Iterable<E>{
+public class DLLList<E> implements ListInterface<E>, Iterable<E>{
 
     //needs to look like LLList but with sorted add/removes for binary sort
+
+    int numElements;//number of items in list
+    DLLNode<E> head;
+    DLLNode<E> tail;
+
+    boolean found;
+    DLLNode<E> location;
+
+
+    //we need to return DLLList object in get() for binary sort I think maybe use the find helper (which sounds dumb)
+    DLLNode<E> current;
 
     @Override
     public Iterator<E> iterator() {
@@ -42,6 +54,35 @@ public class DLLList implements ListInterface<E>, Iterable<E>{
     public boolean contains(E element) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'contains'");
+
+    }
+
+    public boolean binarySearch(E key){
+        DLLNode<E> OGhead = head;// used to set back to original positions after search
+        DLLNode<E> OGtail = tail;
+        int position=numElements;
+        while(position > 0){
+            if(key.compareTo(head.getData())==0){
+                location = head;
+                found = true;
+                break;
+            }else if(key.compareTo(tail.getData() == 0)){
+                location = tail;
+                found = true;
+                break;
+            }else if(key.compareTo(location.getData() == 0)){
+                found = true;
+                break;
+            }else if(key.compareTo(location.getData() < 0)){
+                tail = location.getPrev();
+            }else if(key.comparTo(location.getData() > 0)){
+                head = location.getNext();
+            }
+            position/=2;
+            get(position);
+            location=current;
+            
+        }
     }
 
     @Override
