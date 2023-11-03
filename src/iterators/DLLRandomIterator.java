@@ -12,7 +12,7 @@ public class DLLRandomIterator <E> implements Iterator<E> {
 
     private ArrayList<E> tempDLList;
 
-    private ArrayList<Boolean> tempBoolList;
+    private boolean[] tempBoolList;
 
     public DLLRandomIterator(DLLNode<E> head)
     {
@@ -27,7 +27,7 @@ public class DLLRandomIterator <E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        return current != null;
+        return current.getNext() != null;
     }
 
     @Override
@@ -35,17 +35,17 @@ public class DLLRandomIterator <E> implements Iterator<E> {
         //Return data from a random array index using 'Math.random'
         //Variable type 'E' to hold data
         E data = null;
-        //Loop through both array lists (same size)
-        for(int i = 0; i < tempBoolList.size(); i++) {
+        //Loop through boolean array
+        for(int i = 0; i < tempBoolList.length; i++) {
             //If the boolean value in the 'tempBoolList' is false, continue
-            if (!tempBoolList.get(i)) {
+            if (!tempBoolList[i]) {
                 //Set current element in 'tempDLList' equal to data
                 data = tempDLList.get(i);
                 //Set the same index in the 'tempBoolList' equal to true;
-                tempBoolList.set(i, true);
+                tempBoolList[i] = true;
                 //Decided to keep this in for the 'hasNext()' method
                 current = current.getNext();
-                break;
+                return data;
             }
         }
         return data;
@@ -70,9 +70,7 @@ public class DLLRandomIterator <E> implements Iterator<E> {
     }
 
     protected void createBoolList() {
-        //Instantiate array list used to hold the boolean values
-        tempBoolList = new ArrayList<>(tempDLList.size());
-        //Fill array list with 'false' boolean values
-        Collections.fill(tempBoolList, Boolean.FALSE); //Time complexity: O(n)
+        //Instantiate boolean array (auto-fills with false values)
+        tempBoolList = new boolean[tempDLList.size()];
     }
 }
