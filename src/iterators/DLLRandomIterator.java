@@ -12,7 +12,7 @@ public class DLLRandomIterator <E> implements Iterator<E> {
 
     private ArrayList<E> tempDLList;
 
-    private boolean[] tempBoolList;
+    private boolean[] tempBoolArray;
 
     public DLLRandomIterator(DLLNode<E> head)
     {
@@ -22,7 +22,7 @@ public class DLLRandomIterator <E> implements Iterator<E> {
         //Creates a shuffled array list using the data from DLList nodes.
         createRandList();
         //Creates boolean array to mark what elements have been 'returned'
-        createBoolList();
+        createBoolArray();
     }
 
     @Override
@@ -36,13 +36,13 @@ public class DLLRandomIterator <E> implements Iterator<E> {
         //Variable type 'E' to hold data
         E data = null;
         //Loop through boolean array
-        for(int i = 0; i < tempBoolList.length; i++) {
+        for(int i = 0; i < tempBoolArray.length; i++) {
             //If the boolean value in the 'tempBoolList' is false, continue
-            if (!tempBoolList[i]) {
+            if (!tempBoolArray[i]) {
                 //Set current element in 'tempDLList' equal to data
                 data = tempDLList.get(i);
                 //Set the same index in the 'tempBoolList' equal to true;
-                tempBoolList[i] = true;
+                tempBoolArray[i] = true;
                 //Decided to keep this in for the 'hasNext()' method
                 current = current.getNext();
                 return data;
@@ -71,6 +71,6 @@ public class DLLRandomIterator <E> implements Iterator<E> {
 
     protected void createBoolArray() {
         //Instantiate boolean array (auto-fills with false values)
-        tempBoolList = new boolean[tempDLList.size()];
+        tempBoolArray = new boolean[tempDLList.size()];
     }
 }
