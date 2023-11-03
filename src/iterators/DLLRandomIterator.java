@@ -21,7 +21,7 @@ public class DLLRandomIterator <E> implements Iterator<E> {
 
         //Creates a shuffled array list using the data from DLList nodes.
         createRandList();
-        //Creates boolean array list to mark what elements have been 'returned'
+        //Creates boolean array to mark what elements have been 'returned'
         createBoolList();
     }
 
@@ -69,7 +69,7 @@ public class DLLRandomIterator <E> implements Iterator<E> {
         Collections.shuffle(tempDLList); //Time complexity: O(n)
     }
 
-    protected void createBoolList() {
+    protected void createBoolArray() {
         //Instantiate boolean array (auto-fills with false values)
         tempBoolList = new boolean[tempDLList.size()];
     }
