@@ -20,36 +20,33 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
     //we need to return DLLList object in get() for binary sort I think maybe use the find helper (which sounds dumb)
     DLLNode<E> current;
 
-    @Override
     public Iterator<E> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
-    }
-
+	return new DLLIterator<E>(head); // based on LLList class, AS 
+	    // throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+	}
+      
+  
     public void add(E element) {
-			DLLNode<E> newNode = new DLLNode<>(element);
+	DLLNode<E> newNode = new DLLNode<>(element);
 			
-			if(head == null) {
-				head = tail = newNode;
-			}
-			else {
-				DLLNode<E> location = head; 
-				while(location != null) {
-					if ((newNode.compareTo(location.getData()) > 0)) { 
-						location = location.getNext();
-					}
-					else {
-						break;
-					}
-				}
+	if(head == null) {
+		head = tail = newNode;
+	} else {
+		DLLNode<E> location = head; 
+		while(location != null) {
+			if ((newNode.compareTo(location.getData()) > 0)) { 
+				location = location.getNext();
+			} else {
+				break;
 			}
 		}
-   /* @Override
-    public void add(E element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+	}
+	    //AS
+	    //throw new UnsupportedOperationException("Unimplemented method 'add'");
     }
-    */
+
+        
+    
     
     @Override
     public boolean remove(E element) {
@@ -60,24 +57,26 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
    @Override
     public int size() {
        return numElements;
+	    //AS
         //throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
 
     
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
         return false;
+	    //AS
        // throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
     }
 
+   
     @Override
     public boolean contains(E element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
-
+        return binarySearch(element);
+	    //AS
+       // throw new UnsupportedOperationException("Unimplemented method 'contains'");
     }
-
+	
     public boolean binarySearch(E key){
         DLLNode<E> OGhead = head;// used to set back to original positions after search
         DLLNode<E> OGtail = tail;
@@ -106,12 +105,16 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
         }
     }
 
-    @Override
     public E get(E element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
-    }
-
+	if (binarySearch(element)){
+		return location.getInfo();
+	}else{
+		return null;
+	   }
+	//AS	
+	   // throw new UnsupportedOperationException("Unimplemented method 'get'");
+	}
+	
     @Override
     public E get(int index) {
         // TODO Auto-generated method stub
