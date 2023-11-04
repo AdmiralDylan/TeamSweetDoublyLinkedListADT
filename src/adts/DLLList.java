@@ -26,28 +26,49 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
         throw new UnsupportedOperationException("Unimplemented method 'iterator'");
     }
 
-    @Override
+    public void add(E element) {
+			DLLNode<E> newNode = new DLLNode<>(element);
+			
+			if(head == null) {
+				head = tail = newNode;
+			}
+			else {
+				DLLNode<E> location = head; 
+				while(location != null) {
+					if ((newNode.compareTo(location.getData()) > 0)) { 
+						location = location.getNext();
+					}
+					else {
+						break;
+					}
+				}
+			}
+		}
+   /* @Override
     public void add(E element) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'add'");
     }
-
+    */
+    
     @Override
     public boolean remove(E element) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
-
-    @Override
+    
+   @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+       return numElements;
+        //throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
 
+    
     @Override
     public boolean isEmpty() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        return false;
+       // throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
     }
 
     @Override
