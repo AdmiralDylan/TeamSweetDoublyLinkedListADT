@@ -17,8 +17,7 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
     DLLNode<E> location;
 
 
-    //we need to return DLLList object in get() for binary sort I think maybe use the find helper (which sounds dumb)
-    DLLNode<E> current;
+
 
     public Iterator<E> iterator() {
 	return new DLLIterator<E>(head); // based on LLList class, AS 
@@ -77,37 +76,73 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
        // throw new UnsupportedOperationException("Unimplemented method 'contains'");
     }
 	
-    public boolean binarySearch(E key){
-        DLLNode<E> OGhead = head;// used to set back to original positions after search
+    private boolean binarySearch (E key){
+        //since the underlying data structure is an doublly linked list, why create an array just for a search?
+        //That would change the time complexity of this binary search to a O(n log n), which defeats the purpose
+        //Linear search in the find helper method has a better complexity O(n)
+        //Worst case for this binarySearch is N
+
+        // used to set back to original positions after search
+        DLLNode<E> OGhead = head;
         DLLNode<E> OGtail = tail;
+        int OGnumElements = numElements;
+        //don't remake the wheel with pointers vars everything is still referenced since its doubly linked (chopping doesn't really chop unless an element is set to null)
+        
+        //position is used as an index value for the .get(index) method
+        //.get(index) is based on the head and tail .getNext() or .getPrev(), in this case it will always use the head
         int position=numElements;
-        while(position > 0){
-            if(key.compareTo(head.getData())==0){
+        
+        boolean found = false;
+
+        while(position > 0){//
+            //checks if head or tail already contain locaiton and are used as a part of the search
+            // since these are moving parts, why not use them?
+
+            position/=2;
+            get(position);
+
+            if(((Comparable) key).compareTo(head)==0){
                 location = head;
                 found = true;
                 break;
-            }else if(key.compareTo(tail.getData() == 0)){
+            }else if(((Comparable) key).compareTo(tail) == 0){
                 location = tail;
                 found = true;
                 break;
-            }else if(key.compareTo(location.getData() == 0)){
+            }else if(((Comparable) key).compareTo(location) == 0){
                 found = true;
                 break;
-            }else if(key.compareTo(location.getData() < 0)){
+            }else if(((Comparable) key).compareTo(location) < 0){
                 tail = location.getPrev();
-            }else if(key.comparTo(location.getData() > 0)){
+            }else if(((Comparable) key).compareTo(location) > 0){
                 head = location.getNext();
             }
-            position/=2;
-            get(position);
-            location=current;
-            
+        }
+        head = OGhead;
+        tail = OGtail;
+        numElements = OGnumElements;
+        return found;
+    }
+
+    public void find(E key){
+        DLLNode<E> headPtr = head;
+        DLLNode<E> tailPtr = tail;
+        for(int i = 0;i<numElements/2;i++){
+            if(headPtr.getData().equals(key)){
+                location = headPtr;
+                found = true;
+            } else if(tailPtr.getData().equals(key)){
+                location = tailPtr;
+                found = true;
+            }
+            headPtr.getNext();
+            tailPtr.getPrev();
         }
     }
 
     public E get(E element) {
 	if (binarySearch(element)){
-		return location.getInfo();
+		return location.getData();
 	}else{
 		return null;
 	   }
@@ -115,10 +150,28 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
 	   // throw new UnsupportedOperationException("Unimplemented method 'get'");
 	}
 	
+
+
     @Override
     public E get(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+        DLLNode<E> ptr;
+        
+        if(numElements-index < numElements/2){
+            ptr = tail;
+            index = numElements - index;
+                for(int i = 0;i<index;i++){
+                    tail.getPrev();
+                    location = tail;
+            }
+        } else {
+            ptr = head;
+                for(int i = 0;i<index;i++){
+                    head.getNext();
+                    location = head;            
+            }
+        }
+        
+        return ptr.getData();
     }
     
 }
