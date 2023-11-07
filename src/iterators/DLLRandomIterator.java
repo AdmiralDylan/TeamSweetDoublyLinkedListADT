@@ -3,31 +3,38 @@ package iterators;
 import nodes.DLLNode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 
-public class DLLRandomIterator <E> implements Iterator<E> {
+public class DLLRandomIterator<E> implements Iterator<E> {
     private DLLNode<E> head;
     private DLLNode<E> current;
 
-    private ArrayList<E> tempDLList;
+    // adds iterables into arr list
+    private ArrayList<E> list = new ArrayList<>();
 
-    private boolean[] tempBoolArray;
 
     public DLLRandomIterator(DLLNode<E> head)
     {
         this.head = head;
         current = head;
 
+        while(current != null){
+            list.add(current.getData());
+            current = current.getNext();
+        }
+        current = head;
+        
+        /*
         //Creates a shuffled array list using the data from DLList nodes.
         createRandList();
         //Creates boolean array to mark what elements have been 'returned'
         createBoolArray();
+        */
     }
 
     @Override
     public boolean hasNext() {
-        return current.getNext() != null;
+        return !list.isEmpty();
     }
 
     @Override
@@ -35,6 +42,15 @@ public class DLLRandomIterator <E> implements Iterator<E> {
         //Return data from a random array index using 'Math.random'
         //Variable type 'E' to hold data
         E data = null;
+        int numElements = list.size();
+        int newIteration = (int) (Math.random() * numElements);
+        data = list.get(newIteration);
+        list.remove(newIteration);
+
+        return data;
+
+        /*
+
         //Loop through boolean array
         for(int i = 0; i < tempBoolArray.length; i++) {
             //If the boolean value in the 'tempBoolList' is false, continue
@@ -49,8 +65,11 @@ public class DLLRandomIterator <E> implements Iterator<E> {
             }
         }
         return data;
+
+        */
     }
 
+/*
     protected void createRandList() {
         //Temporary initial array list size
         int initSize = 10;
@@ -73,4 +92,6 @@ public class DLLRandomIterator <E> implements Iterator<E> {
         //Instantiate boolean array (auto-fills with false values)
         tempBoolArray = new boolean[tempDLList.size()];
     }
+
+    */
 }

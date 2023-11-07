@@ -32,20 +32,17 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
     public void add(E element) {
 	DLLNode<E> newNode = new DLLNode<>(element);
 	
-	if(head == null) {
+	if(head == null) {//set head and tail nodes then generic case
 		head = tail = newNode;
-        //System.out.println("flag 1");
 	} else if(((Comparable) element).compareTo(tail.getData()) > 0){
         newNode.setPrev(tail);
         tail.setNext(newNode);
         tail = newNode;
 
-        //System.out.println("flag 2");
     } else if(((Comparable) element).compareTo(head.getData()) < 0){
         newNode.setNext(head);
         head.setPrev(newNode);
         head = newNode;
-        //System.out.println("flag2.5");
     } else {
 		DLLNode<E> ptr = head.getNext();
          
@@ -53,9 +50,9 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
 
 			ptr = ptr.getNext();
 
-            //System.out.println("flag 3");
 		}
 
+        //connect new node then set existing nodes
         newNode.setPrev(ptr.getPrev());
         newNode.setNext(ptr);
         ptr.getPrev().setNext(newNode);
