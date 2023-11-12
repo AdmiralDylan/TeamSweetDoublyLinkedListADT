@@ -6,6 +6,7 @@ import interfaces.ListInterface;
 import iterators.DLLIterator;
 import iterators.DLLRandomIterator;
 import nodes.DLLNode;
+import nodes.LLNode;
 
 public class DLLList<E> implements ListInterface<E>, Iterable<E>{
 
@@ -17,15 +18,27 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
     boolean found;
     DLLNode<E> location;
 
+    boolean IsRandIter = false; 
 
-
-
+    @Override
     public Iterator<E> iterator() {
-	return new DLLIterator<E>(head); // based on LLList class, AS 
+        if(IsRandIter){
+            return new DLLRandomIterator<>(head);
+        } else{
+            return new DLLIterator<>(head);
+        }
 	}
 
+
+    public Iterator<E> iteratorLinear() {
+    	IsRandIter = false; 
+        return new DLLIterator<>(head);
+	}
+
+    
     public Iterator<E> iteratorRandom(){
-        return new DLLRandomIterator<E>(head);
+        IsRandIter = true;
+        return new DLLRandomIterator<>(head);
     }
       
   
@@ -34,19 +47,19 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
 	
 	if(head == null) {//set head and tail nodes then generic case
 		head = tail = newNode;
-	} else if(((Comparable) element).compareTo(tail.getData()) > 0){
+	} else if(((Comparable) element).compareTo(tail.getData()) >= 0){
         newNode.setPrev(tail);
         tail.setNext(newNode);
         tail = newNode;
 
-    } else if(((Comparable) element).compareTo(head.getData()) < 0){
+    } else if(((Comparable) element).compareTo(head.getData()) <= 0){
         newNode.setNext(head);
         head.setPrev(newNode);
         head = newNode;
     } else {
 		DLLNode<E> ptr = head.getNext();
          
-		while(((Comparable) element).compareTo(ptr.getData()) > 0) {
+		while(((Comparable) element).compareTo(ptr.getData()) >= 0) {
 
 			ptr = ptr.getNext();
 
@@ -57,11 +70,9 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
         newNode.setNext(ptr);
         ptr.getPrev().setNext(newNode);
         ptr.setPrev(newNode);
-        //System.out.println(ptr.getData());
 
 	}
-    //System.out.println(head.getData());
-    //System.out.println(tail.getData());
+
 
     numElements++;
 	    //AS & DHR
@@ -125,22 +136,24 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
         
         //position is used as an index value for the .get(index) method
         //.get(index) is based on the head and tail .getNext() or .getPrev(), in this case it will always use the head
-        int position=numElements;
+        int position=numElements-1;
         
         boolean found = false;
 
-        while(position > 0){//
+        while(position/2 > 0){//
             //checks if head or tail already contain locaiton and are used as a part of the search
             // since these are moving parts, why not use them?
-
-            position/=2;
+            
+            //System.out.println(toString());            
+            position/=2; 
+            //System.out.println(position);
             get(position);
-
+            
             if(((Comparable) key).compareTo(head.getData())==0){
                 location = head;
                 found = true;
                 break;
-            }else if(((Comparable) key).compareTo(head.getData()) == 0){
+            }else if(((Comparable) key).compareTo(tail.getData()) == 0){
                 location = tail;
                 found = true;
                 break;
@@ -149,9 +162,13 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
                 break;
             }else if(((Comparable) key).compareTo(location.getData()) < 0){
                 tail = location.getPrev();
+
             }else if(((Comparable) key).compareTo(location.getData()) > 0){
                 head = location.getNext();
+                
             }
+            
+
         }
         head = OGhead;
         tail = OGtail;
@@ -192,24 +209,18 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
 
     @Override
     public E get(int index) {
-        DLLNode<E> ptr;
-        
-        if(numElements-index < numElements/2){
-            ptr = tail;
-            index = numElements - index;
-                for(int i = 0;i<index;i++){
-                    tail.getPrev();
-                    location = tail;
-            }
-        } else {
-            ptr = head;
-                for(int i = 0;i<index;i++){
-                    head.getNext();
-                    location = head;            
-            }
-        }
-        
-        return ptr.getData();
+        DLLNode<E> ptr = head;
+		if(index < numElements){
+			for(int i=0;i<index;i++){
+				if(ptr != null){
+					ptr = ptr.getNext();
+                    location = ptr;
+				}
+			}
+			
+			return ptr.getData();
+		}
+		return null;
     }
     
 

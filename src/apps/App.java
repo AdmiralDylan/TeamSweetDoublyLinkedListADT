@@ -12,85 +12,64 @@ public class App {
 
         final int TESTING_TIME_IN_ms = 200;
         
-        String[] numList = new String[]{"a","z","c","z","d","e","k","g","h","i","j"};
+        
+        String[] strList = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
         
         DLLList<String> list = new DLLList<String>();
         
+        
 
-        for(String a:numList){
+        for(String a:strList){
             list.add(a);
             System.out.println(list.size());
             System.out.println(list.toString());
             Thread.sleep(TESTING_TIME_IN_ms);
         }
 
-        System.out.println(list.toString());
 
-        list.remove("a");
-        System.out.println(list.toString());
-        System.out.println(list.size());
-        
-        System.out.println(list.contains("a"));
-
-        Thread.sleep(TESTING_TIME_IN_ms);
-
-        list.add("b");
-        System.out.println(list.toString());
-        System.out.println(list.size());
-
-        Thread.sleep(TESTING_TIME_IN_ms);
-
-        list.add("a");
-        System.out.println(list.toString());
-        System.out.println(list.size());
-
-        Thread.sleep(TESTING_TIME_IN_ms);
-
-        System.out.println(list.get("a"));
-        System.out.println(list.get("q"));
-        System.out.println(list.contains("a"));
-        System.out.println(list.contains("q"));
-
-        Thread.sleep(TESTING_TIME_IN_ms);
-
-
-        int i = 0;
-
-        System.out.println("Enhanced for" + "\n");
         for(String a:list){
-            System.out.println(a + " index at " + i);
-            i++;
-            Thread.sleep(TESTING_TIME_IN_ms);
+            System.out.println(a + list.contains(a));
+
         }
 
-        System.out.println(list.size());
+        for(int i = list.size()-1;i>=0;i--){
+            System.out.println(list.get(i));
+        }
+        list.iteratorRandom();
+        System.out.println("\nRandom Iterations\n");
+        for(String a:list){
+            System.out.print(list.get(a));
+        }
+        list.iteratorLinear();
+        System.out.println("\nLinear Iterations\n");
+        for(String a:list){
+            System.out.print(list.get(a));
+        }
+        
+        //Int lis
 
-        System.out.println("linear iter");
-        Iterator<String> itrLine = list.iterator(); 
-        Iterator<String> itrRand1 = list.iteratorRandom(); 
-        Iterator<String> itrRand2 = list.iteratorRandom(); 
-
-        while(itrLine.hasNext()){
-            System.out.print(itrLine.next() + ",");
-            Thread.sleep(TESTING_TIME_IN_ms);
+        DLLList<Integer> intList = new DLLList<Integer>();
+        System.out.println("\n");
+        for(int i = 0;i<30;i++){
+            intList.add((int) (Math.random()*100));
+            System.out.println(intList.toString());
+            
         }
 
-        System.out.println("\nrandom iter1");
-        while(itrRand1.hasNext()){
-            System.out.print(itrRand1.next() + ",");
-            Thread.sleep(TESTING_TIME_IN_ms);
+
+        //System.out.println(intList.isEmpty());
+        //System.out.println(intList.toString());
+        Integer f = 1;
+        Integer q = 0;
+        //System.out.println(f.compareTo(q));
+        //System.out.println(intList.get(5));
+        //System.out.println(intList.get((Integer) (-1)));
+
+        for(Integer i:intList){
+            System.out.println("get " + i + " " + intList.get(i));
+            System.out.println("contains " + (i.intValue()-100) + " " + intList.contains(i.intValue()-100));
+
         }
 
-        System.out.println("\nrandom iter2");
-        while(itrRand2.hasNext()){
-            System.out.print(itrRand2.next() + ",");
-            Thread.sleep(TESTING_TIME_IN_ms);
-        }
-    
-        try{
-            System.out.print(itrLine.next());
-        } catch (Exception e){
-            System.out.println("\n" + e);
-        }
     }
 }
