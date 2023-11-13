@@ -85,11 +85,16 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
     public boolean remove(E element){
         find(element);
         if(found){
-            if(head.getData().equals(element)){
+            System.out.println(location.getData());
+            if(head == location){
                 head = head.getNext();
-                head.setPrev(null);
+                if(head == null){
+                    tail = null;
+                } else {
+                    head.setPrev(null);
+                }
             }
-            else if(tail.getData().equals(element)){
+            else if(tail == location){
                 tail = tail.getPrev();
                 tail.setNext(null);
             }
@@ -125,8 +130,7 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
     private boolean binarySearch (E key){
         //since the underlying data structure is an doublly linked list, why create an array just for a search?
         //That would change the time complexity of this binary search to a O(n log n), which defeats the purpose
-        //Linear search in the find helper method has a better complexity O(n)
-        //Worst case for this binarySearch is N
+        //Worst case for this binarySearch is O(n)
 
         // used to set back to original positions after search
         DLLNode<E> OGhead = head;
@@ -181,7 +185,7 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
     private void find(E key){
         DLLNode<E> headPtr = head;
         DLLNode<E> tailPtr = tail;
-        for(int i = 0;i<numElements/2;i++){
+        for(int i = 0;i<=(numElements)/2;i++){
             if(headPtr.getData().equals(key)){
                 location = headPtr;
                 found = true;

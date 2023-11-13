@@ -10,7 +10,7 @@ import nodes.DLLNode;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        final int TESTING_TIME_IN_ms = 200;
+        final int TESTING_TIME_IN_ms = 0;
         
         
         String[] strList = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
@@ -46,14 +46,21 @@ public class App {
             System.out.print(list.get(a));
         }
         
+        list.iteratorRandom();
+        for(String a:list){
+            System.out.println(list.toString());
+            System.out.println(a);
+
+            list.remove(a);
+        }
+        System.out.println(list.toString());
+
         //Int lis
 
         DLLList<Integer> intList = new DLLList<Integer>();
         System.out.println("\n");
         for(int i = 0;i<30;i++){
-            intList.add((int) (Math.random()*100));
-            System.out.println(intList.toString());
-            
+            intList.add((int) (Math.random()*100));            
         }
 
 
@@ -66,10 +73,19 @@ public class App {
         //System.out.println(intList.get((Integer) (-1)));
 
         for(Integer i:intList){
-            System.out.println("get " + i + " " + intList.get(i));
-            System.out.println("contains " + (i.intValue()-100) + " " + intList.contains(i.intValue()-100));
+            System.out.println("get " + intList.get(i+2));
+            System.out.println("contains " + intList.contains(i));
 
         }
+
+        intList.iteratorRandom();
+        for(Integer a:intList){
+            System.out.println(intList.toString());
+            System.out.println(a);
+
+            intList.remove(a);
+        }
+        System.out.println(intList.toString());
 
     }
 }
