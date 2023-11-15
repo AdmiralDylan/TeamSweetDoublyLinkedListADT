@@ -32,6 +32,7 @@ public class DLLRandomIterator<E> implements Iterator<E> {
         */
     }
 
+
     @Override
     public boolean hasNext() {
         return !list.isEmpty();
@@ -94,4 +95,5 @@ public class DLLRandomIterator<E> implements Iterator<E> {
     }
 
     */
+
 }
