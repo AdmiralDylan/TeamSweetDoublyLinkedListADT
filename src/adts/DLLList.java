@@ -83,9 +83,8 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
     
     @Override
     public boolean remove(E element){
-        find(element);
-        if(found){
-            System.out.println(location.getData());
+        //find(element);
+        if(binarySearch(element)){
             if(head == location){
                 head = head.getNext();
                 if(head == null){
@@ -144,7 +143,7 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
         
         boolean found = false;
 
-        while(position/2 > 0){//
+        while(position/2 >= 0){//
             //checks if head or tail already contain locaiton and are used as a part of the search
             // since these are moving parts, why not use them?
             

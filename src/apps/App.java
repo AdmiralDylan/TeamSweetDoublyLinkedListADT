@@ -59,7 +59,7 @@ public class App {
 
         DLLList<Integer> intList = new DLLList<Integer>();
         System.out.println("\n");
-        for(int i = 0;i<30;i++){
+        for(int i = 0;i<255;i++){
             intList.add((int) (Math.random()*100));            
         }
 
@@ -72,18 +72,20 @@ public class App {
         //System.out.println(intList.get(5));
         //System.out.println(intList.get((Integer) (-1)));
 
+        System.out.println(intList.toString());
+
         for(Integer i:intList){
-            System.out.println("get " + intList.get(i+2));
+            System.out.println("get " + intList.get(i));
             System.out.println("contains " + intList.contains(i));
 
         }
 
         intList.iteratorRandom();
+        int j = 0;
         for(Integer a:intList){
-            System.out.println(intList.toString());
-            System.out.println(a);
 
             intList.remove(a);
+            j++;
         }
         System.out.println(intList.toString());
 
