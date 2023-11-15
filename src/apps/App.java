@@ -1,11 +1,9 @@
 package apps;
 
-import java.util.Iterator;
+
 
 import adts.DLLList;
-import iterators.DLLIterator;
-import iterators.DLLRandomIterator;
-import nodes.DLLNode;
+
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -59,7 +57,7 @@ public class App {
 
         DLLList<Integer> intList = new DLLList<Integer>();
         System.out.println("\n");
-        for(int i = 0;i<255;i++){
+        for(int i = 0;i<225;i++){
             intList.add((int) (Math.random()*100));            
         }
 
@@ -75,19 +73,22 @@ public class App {
         System.out.println(intList.toString());
 
         for(Integer i:intList){
-            System.out.println("get " + intList.get(i));
-            System.out.println("contains " + intList.contains(i));
+            System.out.print(i);
+            System.out.print("get " + intList.get(i));
+            System.out.print("contains " + intList.contains(i));
 
         }
 
         intList.iteratorRandom();
         int j = 0;
         for(Integer a:intList){
-
-            intList.remove(a);
+             intList.remove(a);
             j++;
         }
         System.out.println(intList.toString());
+        System.out.println(j);
+        System.out.println(1/2);
 
+        
     }
 }

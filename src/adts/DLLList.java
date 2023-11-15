@@ -6,7 +6,6 @@ import interfaces.ListInterface;
 import iterators.DLLIterator;
 import iterators.DLLRandomIterator;
 import nodes.DLLNode;
-import nodes.LLNode;
 
 public class DLLList<E> implements ListInterface<E>, Iterable<E>{
 
@@ -84,7 +83,8 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
     @Override
     public boolean remove(E element){
         //find(element);
-        if(binarySearch(element)){
+        binarySearch(element);
+        if(found){
             if(head == location){
                 head = head.getNext();
                 if(head == null){
@@ -134,22 +134,25 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
         // used to set back to original positions after search
         DLLNode<E> OGhead = head;
         DLLNode<E> OGtail = tail;
-        int OGnumElements = numElements;
-        //don't remake the wheel with pointers vars everything is still referenced since its doubly linked (chopping doesn't really chop unless an element is set to null)
         
         //position is used as an index value for the .get(index) method
         //.get(index) is based on the head and tail .getNext() or .getPrev(), in this case it will always use the head
-        int position=numElements-1;
+        int position=(numElements);
         
-        boolean found = false;
+        found = false;
 
-        while(position/2 >= 0){//
+        while(position > 0){//
             //checks if head or tail already contain locaiton and are used as a part of the search
             // since these are moving parts, why not use them?
             
-            //System.out.println(toString());            
-            position/=2; 
-            //System.out.println(position);
+            /*
+            System.out.println(toString()); 
+            System.out.println("num elements " + position);
+            System.out.println("head " + head.getData());
+            System.out.println("tail " + tail.getData());
+            */
+            position = (int) (position/2); 
+            //System.out.println("position" + position);
             get(position);
             
             if(((Comparable) key).compareTo(head.getData())==0){
@@ -175,7 +178,6 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
         }
         head = OGhead;
         tail = OGtail;
-        numElements = OGnumElements;
         return found;
 
         //DHR
@@ -215,7 +217,7 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
         DLLNode<E> ptr = head;
 		if(index < numElements){
 			for(int i=0;i<index;i++){
-				if(ptr != null){
+				if(ptr != null && ptr != tail){
 					ptr = ptr.getNext();
                     location = ptr;
 				}
