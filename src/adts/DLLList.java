@@ -141,16 +141,16 @@ public class DLLList<E> implements ListInterface<E>, Iterable<E>{
         
         found = false;
 
-        while(position > 0){//
+        while(position/2 > 0){//
             //checks if head or tail already contain locaiton and are used as a part of the search
             // since these are moving parts, why not use them?
             
-            /*
-            System.out.println(toString()); 
-            System.out.println("num elements " + position);
-            System.out.println("head " + head.getData());
-            System.out.println("tail " + tail.getData());
-            */
+            
+            //System.out.println(toString()); 
+            //System.out.println("num elements " + position);
+            //System.out.println("head " + head.getData());
+            //System.out.println("tail " + tail.getData());
+            
             position = (int) (position/2); 
             //System.out.println("position" + position);
             get(position);

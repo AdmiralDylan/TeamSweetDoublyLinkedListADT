@@ -2,6 +2,8 @@ package apps;
 
 
 
+import java.util.Iterator;
+
 import adts.DLLList;
 
 
@@ -33,8 +35,6 @@ public class App {
         System.out.println("List size after removing 'a': " + listString.size());
 
         System.out.println("Contains 'a'? " + listString.contains("a"));
-
-        final int TESTING_TIME_IN_ms = 0;
         
         
         String[] strList = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
@@ -236,7 +236,7 @@ public class App {
             k++;
             Thread.sleep(TESTING_TIME_IN_ms);
 
-            list.remove(a);
+            list.remove(list.get(a));
         }
         System.out.println(list.toString());
 
@@ -244,37 +244,31 @@ public class App {
 
         DLLList<Integer> intList = new DLLList<Integer>();
         System.out.println("\n");
-        for(int i = 0;i<225;i++){
+        for(int z = 0;z<225;z++){
             intList.add((int) (Math.random()*100));            
         }
 
 
         //System.out.println(intList.isEmpty());
         //System.out.println(intList.toString());
-        Integer f = 1;
-        Integer q = 0;
+
         //System.out.println(f.compareTo(q));
         //System.out.println(intList.get(5));
         //System.out.println(intList.get((Integer) (-1)));
 
         System.out.println(intList.toString());
 
-        for(Integer i:intList){
-            System.out.print(i);
-            System.out.print("get " + intList.get(i));
-            System.out.print("contains " + intList.contains(i));
+        for(Integer z:intList){
+            System.out.print(z);
+            System.out.print("get " + intList.get(z));
+            System.out.print("contains " + intList.contains(z));
 
         }
 
         intList.iteratorRandom();
-        int j = 0;
         for(Integer a:intList){
              intList.remove(a);
-            j++;
         }
-        System.out.println(intList.toString());
-        System.out.println(j);
-        System.out.println(1/2);
 
         Iterator<Integer> intLinItr = listInt.iterator();
         Iterator<Integer> intRandItr = listInt.iteratorRandom();
